@@ -1,6 +1,7 @@
 package datastore
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -17,7 +18,8 @@ func NewUserRepository(db ConnectedSql) repository.UserRepository {
 }
 
 func (u *userRepository) Insert(userID string, name string, createdAt time.Time) (err error) {
-	_, err = u.db.Exec("INSERT INTO user(user_id,name,createdAt) VALUES(?,?,?)", userID, name, createdAt)
+	fmt.Println("insert")
+	_, err = u.db.Exec("insert into user(user_id,name,createdAt) values(?,?,?)", userID, name, createdAt)
 	if err != nil {
 		log.Println(err)
 	}

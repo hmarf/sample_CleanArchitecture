@@ -19,6 +19,8 @@ type userHandler struct {
 
 type UserHandler interface {
 	GetUser(http.ResponseWriter, *http.Request)
+	InsertUser(http.ResponseWriter, *http.Request)
+	DeleteUser(http.ResponseWriter, *http.Request)
 }
 
 func NewUserHandler(db *database.MysqlData) UserHandler {
@@ -32,6 +34,30 @@ func NewUserHandler(db *database.MysqlData) UserHandler {
 }
 
 func (uh *userHandler) GetUser(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	var userGetRequest controllers.UserGetRequest
+	json.Unmarshal(body, &userGetRequest)
+	userGetResponse, err := uh.userController.GetUser(userGetRequest.UserID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	response.Success(w, userGetResponse)
+}
+
+func (uh *userHandler) InsertUser(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	var userInsertRequest controllers.UserInsertRequest
+	json.Unmarshal(body, &userInsertRequest)
+	userInsertResponse, err := uh.userController.InsertUser(userInsertRequest.Name)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	response.Success(w, userInsertResponse)
+}
+
+func (uh *userHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	var userGetRequest controllers.UserGetRequest
 	json.Unmarshal(body, &userGetRequest)

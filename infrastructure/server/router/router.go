@@ -7,4 +7,6 @@ import (
 
 func BootRouter(s server.Server, handler handler.RootHandler) {
 	s.Post("/get/user", handler.GetUser())
+	s.Post("/create/user", handler.InsertUser())
+	s.Post("/delete/user", handler.DeleteUser())
 }

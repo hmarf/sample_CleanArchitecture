@@ -24,6 +24,8 @@ type rootHandler struct {
 
 type RootHandler interface {
 	GetUser() http.HandlerFunc
+	InsertUser() http.HandlerFunc
+	DeleteUser() http.HandlerFunc
 }
 
 func (i *interactor) NewRootHandler() RootHandler {
@@ -34,4 +36,12 @@ func (i *interactor) NewRootHandler() RootHandler {
 
 func (uh *rootHandler) GetUser() http.HandlerFunc {
 	return uh.userHandler.GetUser
+}
+
+func (uh *rootHandler) InsertUser() http.HandlerFunc {
+	return uh.userHandler.InsertUser
+}
+
+func (uh *rootHandler) DeleteUser() http.HandlerFunc {
+	return uh.userHandler.DeleteUser
 }
