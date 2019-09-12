@@ -59,12 +59,12 @@ func (uh *userHandler) InsertUser(w http.ResponseWriter, r *http.Request) {
 
 func (uh *userHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
-	var userGetRequest controllers.UserGetRequest
-	json.Unmarshal(body, &userGetRequest)
-	userGetResponse, err := uh.userController.GetUser(userGetRequest.UserID)
+	var userDeleteRequest controllers.UserDeleteRequest
+	json.Unmarshal(body, &userDeleteRequest)
+	userDeleteResponse, err := uh.userController.GetUser(userDeleteRequest.UserID)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	response.Success(w, userGetResponse)
+	response.Success(w, userDeleteResponse)
 }
